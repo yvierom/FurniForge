@@ -1,0 +1,13 @@
+{
+  "mcpServers": {
+    "furniforge": {
+      "command": "C:\\Program Files\\nodejs\\node.exe",
+      "args": [
+        "C:\\YOUR\\FurniForge-Bridge\\server\\index.mjs"
+      ],
+      "env": {
+        "FURNIFORGE_STATE": "C:\\Users\\YOUR_USER\\AppData\\Local\\FurniForge\\bridge.json"
+      }
+    }
+  }
+}

@@ -1,0 +1,9 @@
+FurniForge
+Copyright (c) 2026 yviero_m. All rights reserved.
+
+Original FurniForge source code and branding in this project are reserved to yviero_m.
+No public license to copy, distribute, sublicense or sell this original software is granted by this development package.
+This is a private development preview, not a published commercial license agreement.
+
+Third-party components remain subject to their own licenses, listed in THIRD-PARTY-NOTICES.md.
+

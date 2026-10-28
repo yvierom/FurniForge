@@ -1,0 +1,5 @@
+{
+  "node": "C:/Program Files/nodejs/node.exe",
+  "codex": "C:/path/to/native/codex.exe",
+  "server": "C:/path/to/FurniForge-Bridge/server/index.mjs"
+}

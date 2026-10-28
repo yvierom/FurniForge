@@ -1,0 +1,44 @@
+const $=id=>document.getElementById(id);
+const native=!!window.sketchup;
+const assistants=[['GPT Codex','openai.svg'],['Claude Code','claude.svg'],['Cursor','cursor.svg'],['Gemini CLI','googlegemini.svg']];
+let selected='GPT Codex',state=null,modelId=null,hydrated=false,pending=null,demoFiles=[],approvalSubmitted=null;
+function message(text){$('message').textContent=text;}
+function show(id){document.querySelectorAll('.screen').forEach(e=>e.hidden=e.id!==id);window.scrollTo(0,0);}
+function setAssistant(name){selected=name;$('assistant-name').textContent=name;$('assistant-icon').src=assistants.find(a=>a[0]===name)[1];renderRun();}
+function values(){return {...Object.fromEntries(new FormData($('brief'))),assistant:selected};}
+function fieldStatus(){const known=['width_mm','depth_mm','height_mm'].every(k=>values()[k]);$('field-status').textContent=known?'Your supplied dimensions will be used.':'Details are optional. Unspecified dimensions use approximate model scale.';}
+function refs(){return native?(state?.request.references||[]):demoFiles.map((f,i)=>({id:String(i),name:f.file.name,url:f.url}));}
+function active(){return ['starting','running','waiting_approval'].includes(state?.launcher?.run?.status);}
+function send(action,extra={}){window.sketchup.workspace_action(JSON.stringify({action,model_id:modelId,...extra}));}
+function renderRefs(){const items=refs();$('references').replaceChildren();items.forEach(r=>{const row=document.createElement('div');row.className='reference';if(r.url){const img=document.createElement('img');img.src=r.url;img.alt=r.name;row.append(img);}const label=document.createElement('span');label.textContent=r.name;const remove=document.createElement('button');remove.textContent='×';remove.disabled=active()||!!pending;remove.setAttribute('aria-label','Remove '+r.name);remove.onclick=()=>{if(native)send('remove_reference',{reference_id:r.id});else{URL.revokeObjectURL(demoFiles[+r.id].url);demoFiles.splice(+r.id,1);renderRefs();}};row.append(label,remove);$('references').append(row);});}
+function renderRun(){const run=state?.launcher?.run;const busy=active();$('generate').disabled=busy||!!pending||selected!=='GPT Codex';$('attach').disabled=busy||!!pending;for(const e of $('brief').elements)e.disabled=busy;document.querySelectorAll('[data-screen="assistants"]').forEach(b=>b.disabled=busy);$('allow-background').disabled=busy;$('cancel-run').hidden=!busy;$('session-id').textContent=run?.session_id?'Session '+run.session_id:'';
+ const approval=run?.status==='waiting_approval'?run.approval:null;
+ $('approval-panel').hidden=!approval;
+ if(approval){$('approval-message').textContent=approval.message+' ('+approval.tool+')';$('approval-arguments').textContent=JSON.stringify(approval.arguments,null,2);$('approve-action').disabled=approvalSubmitted===approval.token;$('decline-action').disabled=approvalSubmitted===approval.token;}
+ else approvalSubmitted=null;
+ if(selected!=='GPT Codex'){$('run-status').textContent='Automatic launch not connected';$('run-message').textContent='This assistant needs its own background integration. Select GPT Codex to use automatic generation.';return;}
+ if(!native){$('run-status').textContent='Browser preview';$('run-message').textContent='Background generation runs from the SketchUp extension.';return;}
+ const labels={starting:'Starting Codex…',running:'Creating your model…',waiting_approval:'Waiting for your approval',finished:state?.job?.stage==='completed'?'Model created':'Session finished',incomplete:'Model not completed',failed:'Session failed',cancelled:'Session stopped'};
+ $('run-status').textContent=labels[run?.status]||(state?.launcher?.available?'Ready':'Setup needed');$('run-message').textContent=run?.message||state?.launcher?.message||'Add images, optionally describe the model, then start a background session.';
+}
+window.receiveState=function(next,notice){state=next;if(modelId!==next.model_id){modelId=next.model_id;hydrated=false;pending=null;$('allow-background').checked=false;}
+ if(!hydrated){for(const e of $('brief').elements)if(e.name)e.value=next.request.values?.[e.name]??'';const chosen=next.request.values?.assistant;if(assistants.some(a=>a[0]===chosen))selected=chosen;hydrated=true;}
+ $('assistant-name').textContent=selected;$('assistant-icon').src=assistants.find(a=>a[0]===selected)[1];const connection=next.bridge_connection?.state;
+ $('bridge-status').textContent=connection==='connected'?'● SketchUp bridge connected':connection==='disconnected'?'● SketchUp bridge disconnected':'● Checking SketchUp bridge…';
+ $('last-caller').textContent=next.status.last_mcp_caller?'Last external MCP call: '+next.status.last_mcp_caller+' · '+(next.status.last_mcp_call_at||'time unavailable'):'No external MCP activity yet.';
+ $('assistant-connection').textContent=selected!=='GPT Codex'?'Assistant background integration unavailable':active()?(next.status.background_mcp_seen?'Codex session: MCP call received':'Codex session: waiting for MCP call'):'Codex session: inactive';
+ if(notice){pending=null;message(notice);}renderRefs();renderRun();fieldStatus();
+};
+document.querySelectorAll('[data-screen]').forEach(b=>b.onclick=()=>show(b.dataset.screen));$('start').onclick=()=>show('assistants');assistants.forEach(([name,src])=>{const b=document.createElement('button'),img=document.createElement('img'),label=document.createElement('span');img.src=src;img.alt='';label.textContent=name;b.append(img,label);b.onclick=()=>{setAssistant(name);show('workspace');};$('assistant-grid').append(b);});
+$('brief').onsubmit=e=>e.preventDefault();for(const e of $('brief').elements)e.addEventListener('input',fieldStatus);
+$('attach').onclick=()=>$('demo-files').click();
+function readImage(file){return new Promise((resolve,reject)=>{const reader=new FileReader();reader.onload=()=>resolve({name:file.name,data:reader.result});reader.onerror=()=>reject(Error('Could not read '+file.name));reader.readAsDataURL(file);});}
+$('demo-files').onchange=async()=>{const files=Array.from($('demo-files').files);$('demo-files').value='';if(!files.length)return;if(files.some(f=>!['image/png','image/jpeg'].includes(f.type)||f.size>5*1024*1024)||files.length+refs().length>8){message('Choose up to 8 PNG/JPEG images in total, 5 MB each.');return;}
+ if(native){pending='upload';renderRun();try{const images=await Promise.all(files.map(readImage));send('upload_references',{images});}catch(e){pending=null;renderRun();message(e.message);}}
+ else{demoFiles.push(...files.map(file=>({file,url:URL.createObjectURL(file)})));renderRefs();message(files.length+' images selected for browser preview.');}
+};
+$('generate').onclick=()=>{if(active()||pending)return;if(!refs().length){message('Add reference images first.');return;}if(!$('brief').checkValidity()){$('optional-details').open=true;$('brief').reportValidity();return;}if(!$('allow-background').checked){message('Allow the background session to start modelling with your assistant.');return;}if(!native){message('Browser preview only. Open FurniForge in SketchUp to start the session.');return;}pending='generate';renderRun();send('generate',{values:values(),allow_background:true});};
+function respondApproval(decision){const approval=state?.launcher?.run?.approval;if(!native||!approval||approvalSubmitted===approval.token)return;approvalSubmitted=approval.token;renderRun();send('respond_approval',{token:approval.token,decision});}
+$('approve-action').onclick=()=>respondApproval('accept');$('decline-action').onclick=()=>respondApproval('decline');
+$('cancel-run').onclick=()=>{if(native)send('cancel_background');};$('refresh').onclick=()=>native?window.sketchup.refresh():message('Browser preview only.');$('setup-button').onclick=()=>$('setup').showModal();$('close-setup').onclick=()=>$('setup').close();document.querySelectorAll('[data-pan]').forEach(b=>b.onclick=()=>document.querySelector('.board').scrollBy({left:Number(b.dataset.pan)*600,behavior:'smooth'}));
+$('environment').textContent=native?'SketchUp · 0.4.2':'Browser preview · no live bridge';setAssistant(selected);fieldStatus();renderRefs();if(native){window.sketchup.ready();setInterval(()=>{if(!$('workspace').hidden)window.sketchup.refresh();},2000);}
