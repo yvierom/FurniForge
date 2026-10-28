@@ -49,6 +49,51 @@ From the extracted repository folder, run `npm ci --ignore-scripts`, install and
 
 Ask the assistant to read [Assistant setup](integrations/ASSISTANT-SETUP.md). It can help configure that assistant's MCP connection and test `furniforge_status`. This is a manual assistant workflow, not a background session initiated by the FurniForge panel. The integrations have not yet been tested end-to-end with those providers. See the [background integration brief](integrations/BACKGROUND-INTEGRATION.md) for the remaining work.
 
+## MCP configuration examples
+
+The bridge runs locally through Node.js. These examples are for Windows and require an extracted FurniForge repository, installed dependencies, and the FurniForge extension running in SketchUp. Replace every example path with the actual path on your computer. Merge only the `furniforge` entry into your existing configuration; preserve other settings.
+
+### Claude Code and Cursor
+
+For Claude Code, add the entry to the project-root `.mcp.json`. For Cursor, add it to the selected project or user `.cursor/mcp.json`:
+
+```json
+{
+  "mcpServers": {
+    "furniforge": {
+      "command": "C:\\Program Files\\nodejs\\node.exe",
+      "args": [
+        "C:\\path\\to\\FurniForge\\server\\index.mjs"
+      ],
+      "env": {
+        "FURNIFORGE_STATE": "C:\\Users\\YOUR_USER\\AppData\\Local\\FurniForge\\bridge.json"
+      }
+    }
+  }
+}
+```
+
+### Gemini CLI
+
+Merge the same `furniforge` entry into `.gemini/settings.json` under `mcpServers`, keeping `trust: false`. For provider-specific steps and generated configuration snippets, see [Assistant setup](integrations/ASSISTANT-SETUP.md).
+
+### GPT Codex
+
+For a manual MCP connection, merge this example into the appropriate Codex configuration:
+
+```toml
+[mcp_servers.furniforge]
+command = 'C:\Program Files\nodejs\node.exe'
+args = ['C:\path\to\FurniForge\server\index.mjs']
+startup_timeout_sec = 20
+tool_timeout_sec = 30
+
+[mcp_servers.furniforge.env]
+FURNIFORGE_STATE = 'C:\Users\YOUR_USER\AppData\Local\FurniForge\bridge.json'
+```
+
+The state file contains a connection token: provide its **path only**, and do not share or commit its contents. Restart or reload the assistant as needed, then verify the connection with `furniforge_status`. A configuration entry alone does not confirm a working connection. These examples configure MCP; they do not enable background launch for Claude Code, Cursor or Gemini, which remains unimplemented and unverified.
+
 ## Before you use it
 
 - FurniForge is a preview, not a guarantee of a photo-identical or manufacturing-ready model. Hidden surfaces, proportions and material appearance may be approximated; check the result in SketchUp.
