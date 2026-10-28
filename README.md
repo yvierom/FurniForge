@@ -9,6 +9,22 @@ FurniForge is an early developer preview for interior designers who want to brin
 > **Developer preview · Windows · v0.4.2**  
 > The current background workflow uses GPT Codex and asks for approval when needed. Model fidelity depends on the reference images and the assistant; hidden details and unknown dimensions may be estimated.
 
+## Table of Contents
+
+- [A real prototype test](#a-real-prototype-test)
+- [What you can do](#what-you-can-do)
+- [Assistant support](#assistant-support)
+- [Install from the repository ZIP](#install-from-the-repository-zip)
+  - [GPT Codex background setup](#gpt-codex-background-setup)
+  - [Claude Code, Cursor and Gemini CLI](#claude-code-cursor-and-gemini-cli)
+- [MCP configuration examples](#mcp-configuration-examples)
+  - [Claude Code and Cursor](#claude-code-and-cursor)
+  - [Gemini CLI](#gemini-cli)
+  - [GPT Codex](#gpt-codex)
+- [Before you use it](#before-you-use-it)
+- [Documentation](#documentation)
+- [Author & License](#author--license)
+
 ## A real prototype test
 
 See a supplied reference and an actual SketchUp model preview from the [sofa test](docs/SOFA-TEST.md). The result is an approximation, and photo similarity has not been measured.
