@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 300" role="img" aria-labelledby="title desc">
+<title id="title">FurniForge workflow</title><desc id="desc">Attach reference images, work with an AI assistant, and create editable geometry in SketchUp.</desc>
+<rect width="1200" height="300" rx="20" fill="#f7f7f4"/>
+<g fill="#fff" stroke="#deded8" stroke-width="2"><rect x="25" y="25" width="350" height="250" rx="16"/><rect x="425" y="25" width="350" height="250" rx="16"/><rect x="825" y="25" width="350" height="250" rx="16"/></g>
+<g fill="#73736e" font-family="Arial,sans-serif" font-size="15" letter-spacing="2"><text x="52" y="64">01 / REFERENCE</text><text x="452" y="64">02 / ASSISTANT</text><text x="852" y="64">03 / SKETCHUP</text></g>
+<g fill="#222" font-family="Arial,sans-serif" font-size="24" font-weight="bold"><text x="52" y="110">Add furniture images</text><text x="452" y="110">Work with your AI</text><text x="852" y="110">Create editable geometry</text></g>
+<g fill="#55554f" font-family="Arial,sans-serif" font-size="17"><text x="52" y="150">Include additional views,</text><text x="52" y="175">dimensions or context.</text><text x="452" y="150">The assistant reads the images</text><text x="452" y="175">and asks for approval when needed.</text><text x="852" y="150">The model appears directly</text><text x="852" y="175">in your SketchUp workspace.</text></g>
+<g fill="#858580" font-family="Arial,sans-serif" font-size="14"><text x="52" y="238">PNG / JPEG · up to 8 images</text><text x="452" y="238">Codex background flow in preview</text><text x="852" y="238">Review and refine your model</text></g>
+<g fill="#888" font-family="Arial,sans-serif" font-size="28"><text x="390" y="158">→</text><text x="790" y="158">→</text></g>
+</svg>

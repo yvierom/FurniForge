@@ -1,70 +1,66 @@
-# FurniForge 0.4.2
-Private developer preview by yviero_m.
+# FurniForge
 
-Build editable SketchUp furniture models from reference images, with optional dimensions and an additional description. The Windows extension can start GPT Codex in the background through the locally installed Codex CLI, using the account signed in to that CLI. No manual copy/send step is needed. Codex tool calls that require approval are presented in the workspace for the user to approve or decline.
+**Turn furniture reference images into editable SketchUp geometry, with help from your AI assistant.**
 
-## Use in SketchUp
-1. Open **Extensions > FurniForge > Open workspace**, click the logo and choose **GPT Codex**.
-2. Click **Add reference images**. Select several files in one picker with Ctrl or Shift. Up to eight PNG/JPEG images are allowed in total, 5 MB each; you may add another batch later.
-3. Optionally add dimensions/material or fill in **Additional description**. The description supplements the images and is saved with the same request.
-4. Enable **Allow a background AI session for this request** and click **Create model**.
-5. When Codex requests permission, review the tool name and parameters, then select **Approve this action** or **Decline**. Each decision applies to the current request. Watch the separate SketchUp bridge and Codex session indicators. The bridge indicator runs a loopback health check; Codex shows whether the current session has made an MCP call. Watch the session status. Geometry is created directly in the active SketchUp model, beside existing geometry, and the camera frames the component when geometry first appears and when the job completes. **Stop session** cancels the owned Codex process tree and revokes its request scope; geometry already created remains in the scene.
+FurniForge is an early developer preview for interior designers who want to bring a pictured furniture product into their SketchUp workflow. Add one or more reference images, provide any dimensions or context you know, and let the assistant build a model directly in the open SketchUp scene.
 
-The previous Model panel has been replaced by the description input. Save or export geometry using SketchUp. Open `sketchup/furniforge/ui/panel.html` in a browser for a design preview; uploads there do not send a live request to SketchUp.
+![FurniForge workflow: reference images, AI assistant and editable SketchUp geometry](docs/workflow.svg)
 
-## Install / update on Windows
-1. Extract the source package to a stable location. Install Node.js 20+ and run `npm ci --ignore-scripts` in the bridge folder.
-2. Install `releases/FurniForge-0.4.2.rbz` using SketchUp Extension Manager. Restart SketchUp after upgrading.
-3. Install Codex CLI and sign in with your own account. Verify `codex login status`.
-4. Run `setup-launcher.ps1` from PowerShell in the bridge folder. The launcher uses a native `codex.exe`; if your PATH resolves to a `.cmd` wrapper, pass the actual executable using `-CodexPath`.
-5. The script writes `%LOCALAPPDATA%/FurniForge/launcher.json` with absolute paths for Node, Codex and `server/index.mjs`. See `config/launcher.example.json` for manual configuration. Update these paths if you move the bridge or replace the Codex executable.
-6. Open the workspace, select GPT Codex and follow the steps above.
+> **Developer preview · Windows · v0.4.2**  
+> The current background workflow uses GPT Codex and asks for approval when needed. Model fidelity depends on the reference images and the assistant; hidden details and unknown dimensions may be estimated.
 
-The automatic session receives its own FurniForge MCP configuration; manually registering this server in the Codex desktop app is not required for that session. It runs without a terminal window and does not open a visible desktop chat. This release's native launcher is Windows-only.
+## What you can do
 
-For assistant-guided MCP setup see [integrations/ASSISTANT-SETUP.md](integrations/ASSISTANT-SETUP.md). Claude Code, Cursor and Gemini CLI remain visible as assistant choices, but automatic generation is disabled for them until their background integrations are implemented. For independent manual MCP development, `config/codex.example.toml` and `config/mcp.example.json` show stdio configuration. Set `FURNIFORGE_STATE` to the real SketchUp bridge.json path when profiles differ.
+- Add up to eight PNG or JPEG reference images, including multiple views.
+- Provide optional product details, dimensions, material notes and a description.
+- Start a GPT Codex session from FurniForge and review requested actions as it builds.
+- Receive named, editable geometry directly in SketchUp and refine it there.
 
-Keep bridge.json private: it contains a local connection token. The package contains no account credentials. The source and packaged extension are maintained in this private repository. This is an unsigned developer package.
+## Assistant support
 
-## Input, usage and model quality
-- At least one image is required. Dimensions, product details and description are optional.
-- Supplied values are preserved rather than re-estimated. Image interpretation, geometry construction and visual review still use the assistant's account usage. Blank dimensions result in approximate scale, not measured product dimensions.
-- The session reads all attached references before starting a job, builds named editable parts, captures a preview and finishes the model. No separate plan approval or three-view checklist is required; Codex tool approvals are requested when needed.
-- The assistant is instructed to model the pictured product. Accuracy depends on image coverage and the assistant's modelling; exact reconstruction from a single photograph is not guaranteed. Hidden surfaces are inferred.
-- Native uploads are cached under `%LOCALAPPDATA%/FurniForge/references`. These cached files remain after a request ends. The assistant receives image bytes when it calls the reference-reading tool.
-- Requests, descriptions and reference bindings are per-model in memory and reset when SketchUp closes. Save the SketchUp scene to preserve geometry. Reattach references after reopening this preview release.
+| Assistant | Current support |
+| --- | --- |
+| GPT Codex | Background workflow from the FurniForge panel; tested with a furniture model. |
+| Claude Code | MCP setup guide available; manual assistant workflow is unverified. Background launch is not implemented. |
+| Cursor | MCP setup guide available; manual assistant workflow is unverified. Background launch is not implemented. |
+| Gemini CLI | MCP setup guide available; manual assistant workflow is unverified. Background launch is not implemented. |
 
-## Background session boundaries
-The Node supervisor launches Codex App Server in a read-only filesystem sandbox. It disables shell, apps, browser, computer-use, hooks and multi-agent features, disables other discovered MCP servers for this thread, and checks that only FurniForge exposes tools before starting the turn. Codex user configuration is loaded by App Server; the session applies scoped overrides and fails closed if isolation cannot be verified. It supplies the request ID on every MCP call; the bridge rejects calls when that request is no longer current. Stop immediately changes that ID before the process shuts down. Existing Codex sign-in is used; authentication is not copied into the package or launcher config.
+The selected assistant requires its own account and access. AI processing uses that provider's applicable allowance or billing. FurniForge does not include an AI subscription.
 
-A process starting or a completed conversation without a successful finish_model call is not reported as a completed model. An incomplete session shows the assistant’s final explanation when available. The UI reports Starting, Creating, Model created, Model not completed, Session failed or Session stopped based on actual events. Model created additionally requires the job's completed state. A session has a 30-minute limit. If Codex is signed out, unavailable or fails, the UI reports the error. Supported account usage and limits follow the installed Codex CLI/account.
+## Install from the repository ZIP
 
-Background automation uses the supported [Codex non-interactive mode](https://learn.chatgpt.com/docs/non-interactive-mode).
+1. On GitHub, select **Code → Download ZIP**, then extract it to a stable local folder. This repository is currently private, so GitHub access is required.
+2. Open that folder as a project in your coding assistant. The assistant needs access to the extracted files on your computer.
+3. Ask it: **“Read the FurniForge README and help me install and connect FurniForge for my assistant. Preserve my existing settings and verify the connection to SketchUp.”**
+4. Install [FurniForge-0.4.2.rbz](releases/FurniForge-0.4.2.rbz) in SketchUp through **Extension Manager → Install Extension**. Complete any sign-in and permission prompts yourself.
+5. Start SketchUp and FurniForge. Follow the assistant-specific setup below, then verify that the bridge responds before starting a model.
 
-## MCP tools
-| Tool | Purpose |
-|---|---|
-| furniforge_status | Check the local SketchUp bridge |
-| furniforge_get_request | Read image IDs, optional details and request_id |
-| furniforge_read_reference | Return an attached image to the assistant |
-| furniforge_create_job | Start a model after reading its reference images |
-| furniforge_apply_parts | Build/edit named boxes and custom triangle meshes |
-| furniforge_get_job | Read geometry state and feedback |
-| furniforge_capture_preview | Capture a model view |
-| furniforge_finish_model | Finish modelling |
+**Requirements:** Windows for the tested background launcher, SketchUp with the extension installed, Node.js 20+, and the selected assistant's supported access. The extension package is an unsigned developer preview. Do not move the extracted folder after configuration without updating the launcher paths.
 
-Custom geometry supports named parts, flat colours, position/rotation and triangle meshes. Limits: 20 changes and 20,000 triangles per batch, 10,000 vertices per mesh, 500 parts and 200,000 triangles per job, 2 MB per request. Five checkpoints remain available internally. Invalid batches roll back atomically. The bridge exposes no arbitrary Ruby or file-access tool. It uses a loopback socket with a random port and token; one SketchUp instance is supported. Last-caller metadata is not verified identity.
+### GPT Codex background setup
 
-Texture mapping, commercial activation keys and background integrations for other assistants are not implemented.
+From the extracted repository folder, run `npm ci --ignore-scripts`, install and sign in to Codex CLI, then run `setup-launcher.ps1` in PowerShell. If `codex` resolves to a `.cmd` wrapper, provide the native executable with `-CodexPath`. The launcher stores local executable paths in `%LOCALAPPDATA%/FurniForge/launcher.json`; it does not include account credentials. Open **Extensions → FurniForge → Open workspace**, select GPT Codex, attach images, allow the background session, and choose **Create model**. Approve or decline each requested action in the panel.
 
-## Verification
-Run `npm test` for protocol/schema and supervisor tests. `tests/live-background.rb` checks multiple-image storage and description persistence in SketchUp, preserving the current request. `tests/live-background-ui.js` runs in a temporary HtmlDialog harness with captured callbacks. `tests/live-image-workflow.rb` is a historical development fixture requiring an external synthetic test image and is not part of the standalone automated test suite. Historical UI checks are archived under `tests/legacy-v0.3`.
+### Claude Code, Cursor and Gemini CLI
 
-See TEST-RESULTS.md for actual checks and limitations. Integration tests do not establish a numerical photo-matching accuracy claim.
+Ask the assistant to read [Assistant setup](integrations/ASSISTANT-SETUP.md). It can help configure that assistant's MCP connection and test `furniforge_status`. This is a manual assistant workflow, not a background session initiated by the FurniForge panel. The integrations have not yet been tested end-to-end with those providers. See the [background integration brief](integrations/BACKGROUND-INTEGRATION.md) for the remaining work.
 
-## 0.4.2 diagnostic note
-A live diagnostic on a current job added and removed a temporary box successfully through the FurniForge bridge; the existing job returned to zero parts. This proves the geometry path for a basic box, but does not prove that a full AI-generated reference model has completed. Final assistant messages and tool errors are now surfaced when the session does not complete a model.
+## Before you use it
 
+- FurniForge is a preview, not a guarantee of a photo-identical or manufacturing-ready model. Hidden surfaces, proportions and material appearance may be approximated; check the result in SketchUp.
+- Supplied information takes precedence. If overall dimensions are not provided, scale is approximate. Image analysis, modelling and review can still consume AI usage even when details are supplied.
+- Reference files are cached locally and sent to the chosen assistant when it reads them. Request bindings reset when SketchUp closes; save the SketchUp scene and reattach references when needed.
+- Commercial activation, texture mapping, and background integrations for Claude Code, Cursor and Gemini are not implemented.
 
-## Approval support
-The workspace displays Codex MCP tool approval requests and their parameters. Each request waits for an explicit user decision; unrelated permission requests are declined. Requests are scoped to the current modelling request and rejected if stale. **Stop session** cancels the process and revokes the active request.
+## Documentation
+
+- [Assistant-guided MCP setup](integrations/ASSISTANT-SETUP.md)
+- [Background integration development brief](integrations/BACKGROUND-INTEGRATION.md)
+- [Technical details and MCP tools](docs/TECHNICAL-DETAILS.md)
+- [Test results](TEST-RESULTS.md)
+- [Commercial readiness notes](docs/COMMERCIAL-READINESS.md)
+- [Third-party notices](THIRD-PARTY-NOTICES.md)
+
+## License and ownership
+
+FurniForge original source and branding are © 2026 **yviero_m**, all rights reserved. See [LICENSE.txt](LICENSE.txt). Third-party components and brand marks have their own terms; their inclusion in this private preview does not establish permission for a public commercial release.
