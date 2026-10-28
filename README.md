@@ -22,7 +22,7 @@ The previous Model panel has been replaced by the description input. Save or exp
 
 The automatic session receives its own FurniForge MCP configuration; manually registering this server in the Codex desktop app is not required for that session. It runs without a terminal window and does not open a visible desktop chat. This release's native launcher is Windows-only.
 
-Claude Code, Cursor and Gemini CLI remain visible as assistant choices, but automatic generation is disabled for them until their background integrations are implemented. For independent manual MCP development, `config/codex.example.toml` and `config/mcp.example.json` show stdio configuration. Set `FURNIFORGE_STATE` to the real SketchUp bridge.json path when profiles differ.
+For assistant-guided MCP setup see [integrations/ASSISTANT-SETUP.md](integrations/ASSISTANT-SETUP.md). Claude Code, Cursor and Gemini CLI remain visible as assistant choices, but automatic generation is disabled for them until their background integrations are implemented. For independent manual MCP development, `config/codex.example.toml` and `config/mcp.example.json` show stdio configuration. Set `FURNIFORGE_STATE` to the real SketchUp bridge.json path when profiles differ.
 
 Keep bridge.json private: it contains a local connection token. The package contains no account credentials. The source and packaged extension are maintained in this private repository. This is an unsigned developer package.
 
