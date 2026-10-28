@@ -4,7 +4,7 @@
 
 FurniForge is an early developer preview for interior designers who want to bring a pictured furniture product into their SketchUp workflow. Add one or more reference images, provide any dimensions or context you know, and let the assistant build a model directly in the open SketchUp scene.
 
-![FurniForge workflow: reference images, AI assistant and editable SketchUp geometry](docs/workflow.svg)
+![FurniForge logo](docs/furniforge-banner.png)
 
 > **Developer preview · Windows · v0.4.2**  
 > The current background workflow uses GPT Codex and asks for approval when needed. Model fidelity depends on the reference images and the assistant; hidden details and unknown dimensions may be estimated.
