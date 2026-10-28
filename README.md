@@ -11,7 +11,7 @@ FurniForge is an early developer preview for interior designers who want to brin
 
 ## A real prototype test
 
-See a supplied reference and an actual SketchUp model preview from the [Novair sofa test](docs/NOVAIR-TEST.md). The result is an approximation, and photo similarity has not been measured.
+See a supplied reference and an actual SketchUp model preview from the [sofa test](docs/SOFA-TEST.md). The result is an approximation, and photo similarity has not been measured.
 
 ## What you can do
 
