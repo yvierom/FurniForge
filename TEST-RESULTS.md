@@ -2,7 +2,7 @@
 
 - Five automated tests pass for MCP startup, approval wait, stale decision rejection, approve, decline, cancellation and fail-closed server isolation. Simulated events are used for runner tests.
 - A real Codex App Server requested permission for a narrowly scoped apply_parts test against a nonexistent job; the test accepted that request, and the FurniForge bridge returned “Job not found”. This verifies the approval protocol without modifying scene geometry. Only FurniForge exposed tools in the session.
-- Live SketchUp 0.4.2 end-to-end: the user supplied six Novair references and approved multiple actual apply_parts requests in the workspace. Codex completed the job directly in SketchUp with 94 named parts and 45,696 faces; bounding dimensions were 3450 x 3450 x 810 mm. The approval dialog and per-action responses were exercised. Visual similarity is not quantified, and the supplied dimensions were in free-text description rather than validated dimension fields.
+- Live SketchUp 0.4.2 end-to-end: the user supplied six sofa references and approved multiple actual apply_parts requests in the workspace. Codex completed the job directly in SketchUp with 94 named parts and 45,696 faces; bounding dimensions were 3450 x 3450 x 810 mm. The approval dialog and per-action responses were exercised. Visual similarity is not quantified, and the supplied dimensions were in free-text description rather than validated dimension fields.
 
 # 0.4.1 current verification
 

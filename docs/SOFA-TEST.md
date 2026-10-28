@@ -1,12 +1,12 @@
-# Reference-to-model test: Novair sofa
+# Reference-to-model test: sofa
 
 This private developer-preview test used six supplied product reference images and an optional description. A GPT Codex background session created geometry in the active SketchUp model after requested tool actions were approved.
 
-![One of the six reference images used in the test](images/novair-reference.png)
+![One of the six reference images used in the test](images/sofa-reference.png)
 
 *One of six supplied reference images.*
 
-![SketchUp preview of the Novair model at revision 12](images/novair-sketchup-r12.png)
+![SketchUp preview of the sofa model at revision 12](images/sofa-sketchup-r12.png)
 
 *Actual SketchUp preview from the same test session, revision 12. This is a captured model view, not a recording.*
 
@@ -16,7 +16,7 @@ The source and usage rights of the supplied product photograph have not been est
 
 ## Still-image presentation
 
-![Short presentation of the Novair prototype test](images/novair-test-presentation.gif)
+![Short presentation of the sofa prototype test](images/sofa-test-presentation.gif)
 
 This looping presentation uses saved still images. It is not a recording of the modelling session.
 
