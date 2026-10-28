@@ -9,6 +9,10 @@ FurniForge is an early developer preview for interior designers who want to brin
 > **Developer preview · Windows · v0.4.2**  
 > The current background workflow uses GPT Codex and asks for approval when needed. Model fidelity depends on the reference images and the assistant; hidden details and unknown dimensions may be estimated.
 
+## A real prototype test
+
+See a supplied reference and an actual SketchUp model preview from the [Novair sofa test](docs/NOVAIR-TEST.md). The result is an approximation, and photo similarity has not been measured.
+
 ## What you can do
 
 - Add up to eight PNG or JPEG reference images, including multiple views.
