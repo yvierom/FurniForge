@@ -1,0 +1,10 @@
+# Replace these example paths before merging into your Codex configuration.
+[mcp_servers.furniforge]
+command = 'C:\Program Files\nodejs\node.exe'
+args = ['C:\YOUR\FurniForge-Bridge\server\index.mjs']
+startup_timeout_sec = 20
+tool_timeout_sec = 30
+
+[mcp_servers.furniforge.env]
+FURNIFORGE_STATE = 'C:\Users\YOUR_USER\AppData\Local\FurniForge\bridge.json'
+
