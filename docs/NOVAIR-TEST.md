@@ -14,6 +14,12 @@ The test record reports 94 named parts, 45,696 faces and overall bounding dimens
 
 The source and usage rights of the supplied product photograph have not been established. Keep it in the private preview and obtain permission or replace it with an appropriately licensed reference before public or commercial distribution.
 
+## Still-image presentation
+
+![Short presentation of the Novair prototype test](images/novair-test-presentation.gif)
+
+This looping presentation uses saved still images. It is not a recording of the modelling session.
+
 ## Suggested live demonstration
 
 Record a real 30–60 second SketchUp session showing reference upload, assistant selection and approvals, followed by the actual model in the workspace. Identify cuts or time compression clearly and describe the result as a developer preview. No recording of this particular session was located.
