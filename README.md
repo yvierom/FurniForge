@@ -110,6 +110,14 @@ The state file contains a connection token: provide its **path only**, and do no
 - [Commercial readiness notes](docs/COMMERCIAL-READINESS.md)
 - [Third-party notices](THIRD-PARTY-NOTICES.md)
 
-## License and ownership
+## Author & License
 
-FurniForge original source and branding are © 2026 **yviero_m**, all rights reserved. See [LICENSE.txt](LICENSE.txt). Third-party components and brand marks have their own terms; their inclusion in this private preview does not establish permission for a public commercial release.
+**Created by Yuan Viero Mahendra** (yviero_m).
+
+Copyright © 2026 Yuan Viero Mahendra. All rights reserved.
+
+FurniForge is a private development preview. Its original source code and branding are proprietary; see [LICENSE.txt](LICENSE.txt) for details. Third-party components and brand marks have their own terms; see [THIRD-PARTY-NOTICES.md](THIRD-PARTY-NOTICES.md).
+
+---
+
+*FurniForge — furniture modelling in SketchUp from reference images.*
