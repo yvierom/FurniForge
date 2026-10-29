@@ -1,6 +1,6 @@
 # FurniForge
 
-> **Development branch:** Source changes are under review and have not been verified in SketchUp. The included 0.4.2 RBZ remains the previous release and does not contain these changes. See [preview improvements](docs/PREVIEW-IMPROVEMENTS.md).
+> **Development branch:** Source changes are under review; one live SketchUp and Codex test has passed, but this is not a new release. The included 0.4.2 RBZ remains the previous release and does not contain these changes. See [preview improvements](docs/PREVIEW-IMPROVEMENTS.md).
 
 **Turn furniture reference images into editable SketchUp geometry, with help from your AI assistant.**
 
