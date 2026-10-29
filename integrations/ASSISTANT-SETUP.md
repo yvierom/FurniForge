@@ -41,7 +41,7 @@ Only start modelling when the user explicitly asks. Have the user attach referen
 3. Call `furniforge_create_job` with that request ID and a product-specific plan. Build named editable parts using `furniforge_apply_parts` in bounded batches and the current revision. Respect the assistant's approval prompts.
 4. Inspect `furniforge_get_job`, capture and inspect a preview using `furniforge_capture_preview`, correct evident problems, and use `furniforge_finish_model` when complete. Geometry is created directly in the active SketchUp model, not exported as a separate file. Report actual results and limitations; never claim exact similarity or measured dimensions from images alone.
 
-The request and its reference bindings are held in memory for the active SketchUp model and may need to be attached again after SketchUp restarts. See the main `README.md` for limits and installation details.
+The active request is held in memory. In the development candidate, Save draft in model and save the SKP to restore saved details and cached references after reopening; reattach missing files and do not expect an active AI session to resume. See the main `README.md` for limits and installation details.
 
 ## User prompt to start setup
 

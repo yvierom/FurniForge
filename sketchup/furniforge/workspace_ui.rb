@@ -64,7 +64,8 @@ module YvieroM
           when 'save'
             raise 'Stop the current session before changing details.' if background_active?
             save_request(command['values'])
-            push_panel('Brief saved. Provided values will not be re-estimated.')
+            persist_draft(Sketchup.active_model)
+            push_panel('Draft saved in the model. Save the SketchUp file to keep it after closing.')
           when 'reference'
             add_reference
             push_panel('Reference attached locally. Only an explicit assistant tool call sends it to the assistant.')
