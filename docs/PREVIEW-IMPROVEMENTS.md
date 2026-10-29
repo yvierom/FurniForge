@@ -1,6 +1,6 @@
-# Preview improvements — development branch
+# Preview improvements — development candidate
 
-These source changes are a candidate, not a verified SketchUp release. The existing 0.4.2 RBZ has not been rebuilt and does not contain them.
+The development candidate is a preview, not a stable release. The repository contains both the [candidate package](../releases/FurniForge-development-candidate.rbz) and the original 0.4.2 RBZ for rollback. The candidate's internal version label still displays 0.4.2.
 
 - Assistant choices now identify Codex background availability and mark the other assistants as manual setup and unverified.
 - The startup indicator no longer says the session failed while its runner is still starting; users can stop it.
