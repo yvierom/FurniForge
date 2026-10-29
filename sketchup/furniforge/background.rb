@@ -15,7 +15,7 @@ module YvieroM
    begin
     result=JSON.parse(File.read(run[:status_file]))
     if result['status']=='starting' && Time.now-run[:started_at]>60
-     result['status']='failed';result['message']='Codex did not start within 60 seconds. Check launcher paths and account sign-in.'
+     result['message']='Codex is taking longer than expected to start. You can stop the session or check launcher paths and sign-in.'
     end
     run[:last_status]=result
     result

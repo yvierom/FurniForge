@@ -1,3 +1,14 @@
+# Development candidate verification (29 October 2026)
+
+- A fresh test directory successfully installed locked npm dependencies with `npm ci --ignore-scripts` using the registry, then passed all seven Node tests on the existing Windows account. This was not a clean machine or a full first-time installation.
+- The separate pre-existing SketchUp MCP server was temporarily stopped: its `eval_ruby` tool became unavailable while `furniforge_status` continued to respond. It was restarted afterward. This demonstrates separate bridge connectivity; a full model was not generated with the other server stopped during this particular check.
+
+- Seven Node tests passed and browser-preview checks covered assistant labels, unsupported background generation, image selection, and the browser-only draft notice.
+- The installed candidate was loaded in SketchUp 2026. Its UI saved a draft; description and width restored after saving the SKP and restarting SketchUp. A reference supplied via the Ruby upload handler restored from the local cache after reopening the SKP. Missing-image feedback was observed in the UI and tested separately. File-picker upload was not exercised during this test.
+- An isolated Ruby regression covered draft restoration, missing cache, and malformed draft. A simulated 65-second startup remained in the starting state and a real failed status remained failed.
+- One Codex background session ran against the saved test SKP using one reference and a manually entered width of 1,800 mm. The user delegated approval of actions for the test; the session finished with 42 named parts, 18,294 faces and no non-solid parts reported. Overall width matched 1,800 mm; depth 1,800 mm and height 620 mm were estimated. Visual fidelity is not quantified.
+- The 0.4.2 RBZ remains unchanged; the candidate has not been packaged as a release. One successful case does not establish repeatability or commercial readiness.
+
 # 0.4.2 verification
 
 - Five automated tests pass for MCP startup, approval wait, stale decision rejection, approve, decline, cancellation and fail-closed server isolation. Simulated events are used for runner tests.

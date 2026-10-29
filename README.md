@@ -1,5 +1,7 @@
 # FurniForge
 
+> **Developer preview:** The current [development candidate](releases/FurniForge-development-candidate.rbz) includes draft recovery and the latest tested interface. It is not a stable release; its internal version label still displays 0.4.2. The [original 0.4.2 package](releases/FurniForge-0.4.2.rbz) remains available for rollback. See [preview improvements](docs/PREVIEW-IMPROVEMENTS.md).
+
 **Turn furniture reference images into editable SketchUp geometry, with help from your AI assistant.**
 
 FurniForge is an early developer preview for interior designers who want to bring a pictured furniture product into their SketchUp workflow. Add one or more reference images, provide any dimensions or context you know, and let the assistant build a model directly in the open SketchUp scene.
@@ -35,6 +37,7 @@ See a supplied reference and an actual SketchUp model preview from the [sofa tes
 - Provide optional product details, dimensions, material notes and a description.
 - Start a GPT Codex session from FurniForge and review requested actions as it builds.
 - Receive named, editable geometry directly in SketchUp and refine it there.
+- Save a draft in the model and restore its details and locally cached references when reopening the saved SketchUp file.
 
 ## Assistant support
 
@@ -52,10 +55,10 @@ The selected assistant requires its own account and access. AI processing uses t
 1. On GitHub, select **Code → Download ZIP**, then extract it to a stable local folder. This repository is currently private, so GitHub access is required.
 2. Open that folder as a project in your coding assistant. The assistant needs access to the extracted files on your computer.
 3. Ask it: **“Read the FurniForge README and help me install and connect FurniForge for my assistant. Preserve my existing settings and verify the connection to SketchUp.”**
-4. Install [FurniForge-0.4.2.rbz](releases/FurniForge-0.4.2.rbz) in SketchUp through **Extension Manager → Install Extension**. Complete any sign-in and permission prompts yourself.
+4. For the latest development preview, install [FurniForge-development-candidate.rbz](releases/FurniForge-development-candidate.rbz) in SketchUp through **Extension Manager → Install Extension**. Complete any sign-in and permission prompts yourself.
 5. Start SketchUp and FurniForge. Follow the assistant-specific setup below, then verify that the bridge responds before starting a model.
 
-**Requirements:** Windows for the tested background launcher, SketchUp with the extension installed, Node.js 20+, and the selected assistant's supported access. The extension package is an unsigned developer preview. Do not move the extracted folder after configuration without updating the launcher paths.
+**Requirements:** FurniForge has its own MCP bridge; mhyrr's SketchUp MCP connector is not required. Windows for the tested background launcher, SketchUp with the extension installed, Node.js 20+, and the selected assistant's supported access. The extension package is an unsigned developer preview. Do not move the extracted folder after configuration without updating the launcher paths.
 
 ### GPT Codex background setup
 
@@ -114,7 +117,7 @@ The state file contains a connection token: provide its **path only**, and do no
 
 - FurniForge is a preview, not a guarantee of a photo-identical or manufacturing-ready model. Hidden surfaces, proportions and material appearance may be approximated; check the result in SketchUp.
 - Supplied information takes precedence. If overall dimensions are not provided, scale is approximate. Image analysis, modelling and review can still consume AI usage even when details are supplied.
-- Reference files are cached locally and sent to the chosen assistant when it reads them. Request bindings reset when SketchUp closes; save the SketchUp scene and reattach references when needed.
+- Reference files are cached locally and sent to the chosen assistant when it reads them. Use **Save draft in model** and save the SketchUp file to restore saved details and locally cached reference bindings later. Unsaved edits and active AI sessions do not resume; reattach any missing images, especially on another computer.
 - Commercial activation, texture mapping, and background integrations for Claude Code, Cursor and Gemini are not implemented.
 
 ## Documentation

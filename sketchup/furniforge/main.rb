@@ -128,7 +128,7 @@ module YvieroM
     def self.current_request
       # In-memory requests are scoped to the active model, not reused in another model.
       @requests ||= {}
-      @requests[Sketchup.active_model.object_id] ||= {values:{},references:[],request_id:SecureRandom.uuid,read_reference_ids:[]}
+      @requests[Sketchup.active_model.object_id] ||= restore_draft(Sketchup.active_model)
     end
 
     # Check the actual local listener from another thread; never call SketchUp API from this thread.
@@ -178,6 +178,7 @@ module YvieroM
        missing_required:req[:references].empty? ? ['reference_image'] : [],
        optional_missing_dimensions:required.reject { |key| req[:values].key?(key) },
        references:req[:references].map { |r| {id:r[:id],name:r[:name]} },
+       draft_missing_references:req[:draft_missing_references] || 0,
        optional_blank_fields_do_not_require_analysis:true,
        analysis_provider:'selected_assistant',model_type:'image_based',
        workflow:'reference image -> optional details -> model in SketchUp',
@@ -319,6 +320,7 @@ module YvieroM
       group
     end
 
+    require_relative 'draft'
     require_relative 'workflow'
     require_relative 'background'
     require_relative 'workspace_ui'
