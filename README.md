@@ -52,7 +52,7 @@ The selected assistant requires its own account and access. AI processing uses t
 
 ## Install from the repository ZIP
 
-1. On GitHub, select **Code → Download ZIP**, then extract it to a stable local folder. This repository is currently private, so GitHub access is required.
+1. On GitHub, select **Code → Download ZIP**, then extract it to a stable local folder. 
 2. Open that folder as a project in your coding assistant. The assistant needs access to the extracted files on your computer.
 3. Ask it: **“Read the FurniForge README and help me install and connect FurniForge for my assistant. Preserve my existing settings and verify the connection to SketchUp.”**
 4. For the latest development preview, install [FurniForge-development-candidate.rbz](releases/FurniForge-development-candidate.rbz) in SketchUp through **Extension Manager → Install Extension**. Complete any sign-in and permission prompts yourself.
@@ -133,9 +133,9 @@ The state file contains a connection token: provide its **path only**, and do no
 
 **Created by Yuan Viero Mahendra** (yviero_m).
 
-Copyright © 2026 Yuan Viero Mahendra. All rights reserved.
+Copyright © 2026 Yuan Viero Mahendra.
 
-FurniForge is a private development preview. Its original source code and branding are proprietary; see [LICENSE.txt](LICENSE.txt) for details. Third-party components and brand marks have their own terms; see [THIRD-PARTY-NOTICES.md](THIRD-PARTY-NOTICES.md).
+FurniForge is a developer preview. Its original source code is licensed under the [MIT License](LICENSE.txt). The MIT license does not grant trademark rights. Third-party components and brand marks have their own terms; see [THIRD-PARTY-NOTICES.md](THIRD-PARTY-NOTICES.md).
 
 ---
 
