@@ -231,7 +231,7 @@ module YvieroM
       root,job=find_job(params['job_id'])
       raise 'No geometry to preview' if job['parts'].empty?
       view_name=params.fetch('view','perspective')
-      vectors={'perspective'=>[1,-1,0.7],'front'=>[0,-1,0],'back'=>[0,1,0],'top'=>[0,0,1]}
+      vectors={'perspective'=>[1,-1,0.7],'front'=>[0,-1,0],'back'=>[0,1,0],'left'=>[-1,0,0],'right'=>[1,0,0],'top'=>[0,0,1],'bottom'=>[0,0,-1]}
       direction=vectors[view_name];raise 'Invalid view' unless direction
       model=Sketchup.active_model;view=model.active_view
       current_camera=view.camera
@@ -254,7 +254,7 @@ module YvieroM
       begin
         hidden.each { |e,_| e.hidden=true }
         root.hidden=false
-        view.camera=Sketchup::Camera.new(eye,target,view_name=='top' ? [0,1,0] : [0,0,1],false)
+        view.camera=Sketchup::Camera.new(eye,target,%w[top bottom].include?(view_name) ? [0,1,0] : [0,0,1],false)
         # Fit to the export aspect ratio, not the current SketchUp viewport.
         cam=view.camera
         projected=(0..7).map { |i| delta=bb.corner(i)-target; [delta.dot(cam.xaxis),delta.dot(cam.yaxis)] }
@@ -275,11 +275,20 @@ module YvieroM
       push_panel
       {mimeType:'image/png',data:data,job_id:job['id'],revision:job['revision'],view:view_name}
     end
+    def self.missing_final_review_views(job)
+      previews=job['previews'].is_a?(Hash) ? job['previews'] : {}
+      %w[perspective front bottom].reject do |view|
+        entry=previews[view]
+        entry.is_a?(Hash) && entry['revision']==job['revision']
+      end
+    end
     def self.finish_model(params)
       root,job=mutable_job(params['job_id'],params['expected_revision'])
       report=measure_job(root,job)
       raise 'No geometry has been created' if report['parts']==0 || report['faces']==0
       raise 'Model dimensions differ from supplied values; correct them first' unless report['manual_dimensions_match']
+      missing=missing_final_review_views(job)
+      raise "Capture and inspect final-revision previews before finishing: #{missing.join(', ')}" unless missing.empty?
       summary=params.fetch('summary','Model created from the reference images.').to_s
       raise 'Summary must be 1..4000 characters' unless summary.length.between?(1,4000)
       job['stage']='completed';job['summary']=summary
