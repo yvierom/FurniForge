@@ -106,6 +106,13 @@ module YvieroM
       valid_vector(p.fetch('position_mm',[0,0,0]))
       valid_vector(p.fetch('rotation_deg',[0,0,0]),360)
       raise 'Invalid colour' unless p.fetch('color','#d8d5cc').match?(/\A#[0-9a-fA-F]{6}\z/)
+      if p.key?('material')
+        mat=p['material']
+        raise 'Invalid material specification' unless mat.is_a?(Hash) && (mat.keys-%w[preset texture_scale_mm roughness]).empty? && %w[fabric wood].include?(mat['preset'])
+        scale=mat.fetch('texture_scale_mm',200); roughness=mat.fetch('roughness',0.85)
+        raise 'Invalid material scale or roughness' unless scale.is_a?(Numeric) && scale.finite? && scale.between?(10,2000) && roughness.is_a?(Numeric) && roughness.finite? && roughness.between?(0,1)
+        raise 'PBR materials require SketchUp 2025 or later' unless Sketchup::Material.instance_methods.include?(:roughness_enabled=)
+      end
       case p['kind']
       when 'box'
         valid_vector(p['size_mm'])
@@ -137,6 +144,22 @@ module YvieroM
         raise 'Mesh produced no faces' if group.entities.grep(Sketchup::Face).empty?
       end
       color=p.fetch('color','#d8d5cc')
+      if p['material']
+        spec=p['material']; preset=spec['preset']; scale=spec.fetch('texture_scale_mm',200); rough=spec.fetch('roughness',0.85)
+        materials=Sketchup.active_model.materials
+        material=materials.add(materials.unique_name("FurniForge #{preset}"))
+        material.texture=File.join(__dir__,'materials',"#{preset}-base.png")
+        material.texture.size=[scale.mm,scale.mm]
+        material.color=Sketchup::Color.new(color)
+        material.roughness_enabled=true
+        material.roughness_factor=rough
+        material.metalness_enabled=true
+        material.metallic_factor=0.0
+        material.normal_texture=File.join(__dir__,'materials',"#{preset}-normal.png")
+        material.normal_enabled=true
+        material.normal_scale=0.5
+        color=material
+      end
       group.entities.grep(Sketchup::Face).each do |face|
         face.material=color
         face.back_material=color
@@ -310,6 +333,7 @@ module YvieroM
     end
   end
 end
+
 
 
 

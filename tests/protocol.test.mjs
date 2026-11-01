@@ -15,6 +15,12 @@ test('MCP initializes, lists bounded tools, validates input and reports unavaila
   const position=geometry.properties.parts.items.properties.position_mm;
   assert.equal(position.type,'array');assert.equal(position.minItems,3);assert.equal(position.maxItems,3);
   assert.equal(position.items.type,'number');
+  const material=geometry.properties.parts.items.properties.material;
+  assert.deepEqual(material.properties.preset.enum,['fabric','wood']);
+  assert.equal(material.properties.roughness.minimum,0);
+  assert.equal(material.properties.roughness.maximum,1);
+  const invalidMaterial=await client.callTool({name:'furniforge_apply_parts',arguments:{job_id:'test_vectors',expected_revision:0,parts:[{id:'seat',name:'Seat',kind:'box',size_mm:[10,10,10],material:{preset:'fabric',roughness:2}}]}});
+  assert.equal(invalidMaterial.isError,true);
   const invalidVector=await client.callTool({name:'furniforge_apply_parts',arguments:{job_id:'test_vectors',expected_revision:0,parts:[{id:'leg',name:'Leg',kind:'box',position_mm:[1,2],size_mm:[10,10,10]}]}});
   assert.equal(invalidVector.isError,true);
   assert.match(invalidVector.content[0].text,/3|position_mm/);
@@ -28,5 +34,6 @@ test('MCP initializes, lists bounded tools, validates input and reports unavaila
   assert.equal(invalid.isError,true);
  } finally {await client.close();}
 });
+
 
 
