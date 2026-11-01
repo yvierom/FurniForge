@@ -1,5 +1,5 @@
 # FurniForge 0.4.2
-Private developer preview by yviero_m.
+Developer preview by yviero_m.
 
 Build editable SketchUp furniture models from reference images, with optional dimensions and an additional description. The Windows extension can start GPT Codex in the background through the locally installed Codex CLI, using the account signed in to that CLI. No manual copy/send step is needed. Codex tool calls that require approval are presented in the workspace for the user to approve or decline.
 
@@ -24,7 +24,7 @@ The automatic session receives its own FurniForge MCP configuration; manually re
 
 For assistant-guided MCP setup see [integrations/ASSISTANT-SETUP.md](../integrations/ASSISTANT-SETUP.md). Claude Code, Cursor and Gemini CLI remain visible as assistant choices, but automatic generation is disabled for them until their background integrations are implemented. For independent manual MCP development, `config/codex.example.toml` and `config/mcp.example.json` show stdio configuration. Set `FURNIFORGE_STATE` to the real SketchUp bridge.json path when profiles differ.
 
-Keep bridge.json private: it contains a local connection token. The package contains no account credentials. The source and packaged extension are maintained in this private repository. This is an unsigned developer package.
+Keep bridge.json private: it contains a local connection token. The package contains no account credentials. The source and packaged extension are maintained in this repository. This is an unsigned developer package.
 
 ## Input, usage and model quality
 - At least one image is required. Dimensions, product details and description are optional.
