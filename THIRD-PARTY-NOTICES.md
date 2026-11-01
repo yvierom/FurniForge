@@ -11,15 +11,10 @@ The protocol server uses the official MCP SDK. No source from the pre-existing S
 SketchUp is a third-party product. FurniForge is an independent extension.
 
 
-## Assistant brand assets — review pending
+## Assistant names and neutral icons
 
-The assistant selector contains four third-party brand icons retained from the design prototype. The repository history does not identify their source, an asset license, or a permission grant. Their appearance in this repository does not establish that FurniForge has permission to distribute or use them. Product names identify compatibility and do not imply endorsement or affiliation.
+The assistant selector uses original, neutral letter badges created for FurniForge. They are not provider logos. OpenAI, Codex, Claude, Cursor, Google and Gemini are names or marks of their respective owners; mentioning them identifies the relevant assistant and does not imply sponsorship, affiliation or endorsement. Their use remains subject to applicable provider terms.
 
-| Asset | Provider guidance | Review status |
-| --- | --- | --- |
-| `sketchup/furniforge/ui/openai.svg` | [OpenAI design guidelines](https://openai.com/brand/) | Source and permission for this specific asset and use are not documented. |
-| `sketchup/furniforge/ui/claude.svg` | [Anthropic trademark guidelines](https://www.anthropic.com/legal/trademark-guidelines) | Source and prior permission or approval are not documented. |
-| `sketchup/furniforge/ui/cursor.svg` | [Cursor brand guidelines](https://cursor.com/brand) | Source and terms applicable to this specific asset and use are not documented. |
-| `sketchup/furniforge/ui/googlegemini.svg` | [Google brand guidance](https://about.google/brand-resource-center/guidance/) and [brand terms](https://about.google/intl/en/brand-resource-center/brand-terms/) | Source and permission for this specific asset and use are not documented. |
+The four former provider-logo SVGs were replaced in the current source and all three RBZ files on `main`. The older RBZ files were repackaged only to replace those icons; their extension code was not changed by this replacement. Previously published tags, cached downloads, and Git history can still contain the earlier assets. The source and prior permission for those earlier SVGs were not established.
 
-The same icons may also be included in distributed RBZ files and historical Git revisions. Review the relevant provider terms and provenance before distributing those assets, or replace them with independent artwork and rebuild the packages. This inventory is not a legal determination.
+Provider guidance: [OpenAI](https://openai.com/brand/), [Anthropic](https://www.anthropic.com/legal/trademark-guidelines), [Cursor](https://cursor.com/brand), and [Google](https://about.google/brand-resource-center/guidance/). This notice is not a legal determination.

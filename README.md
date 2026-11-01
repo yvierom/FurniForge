@@ -1,6 +1,6 @@
 # FurniForge
 
-> **Developer preview:** The [PBR development candidate](releases/FurniForge-PBR-development-candidate.rbz) adds procedural fabric and wood materials. It is unsigned and not a stable release; its internal version label still displays 0.4.2. Install it with the matching repository source and bridge. The [previous candidate](releases/FurniForge-development-candidate.rbz) and [original 0.4.2 package](releases/FurniForge-0.4.2.rbz) remain available for rollback. See [PBR materials](docs/PBR-MATERIALS.md) and [preview improvements](docs/PREVIEW-IMPROVEMENTS.md).
+> **Developer preview:** The [PBR development candidate](releases/FurniForge-PBR-development-candidate.rbz) adds procedural fabric and wood materials. It is unsigned and not a stable release; its internal version label still displays 0.4.2. Install it with the matching repository source and bridge. The [previous candidate](releases/FurniForge-development-candidate.rbz) and [0.4.2 package](releases/FurniForge-0.4.2.rbz) remain available for rollback; their assistant icons were replaced with neutral badges. See [PBR materials](docs/PBR-MATERIALS.md) and [preview improvements](docs/PREVIEW-IMPROVEMENTS.md).
 
 **Turn furniture reference images into editable SketchUp geometry, with help from your AI assistant.**
 
