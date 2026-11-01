@@ -54,10 +54,15 @@ flowchart LR
     E --> F{"Suitable fabric or<br/>wood material?"}
     F -->|"Yes, when selected"| G["Apply procedural PBR preset<br/>SketchUp 2025+"]
     F -->|"No or not selected"| H["Use solid-colour material"]
-    G --> I["6 · Assistant inspects preview<br/>and corrects visible issues"]
+    G --> I["6 · Capture perspective, front<br/>and bottom previews"]
     H --> I
-    I --> J["7 · Finished editable model<br/>review and refine in SketchUp"]
-    I -. "corrections" .-> D
+    I --> K["Compare with references<br/>and check visible connections"]
+    K --> L{"Obvious issues<br/>remain?"}
+    L -->|"No obvious issues"| J["7 · Finished editable model<br/>review and refine in SketchUp"]
+    L -->|"Yes · up to 3 corrections"| M["Revise the affected parts"]
+    M --> N["Geometry changed:<br/>previous previews invalidated"]
+    N --> I
+    L -->|"Unresolved after corrections"| O["Stop and report<br/>model incomplete"]
 ```
 
 You provide the images and any known measurements in the panel. Codex interprets them and uses the local MCP bridge to create named parts in the open SketchUp model. It can select a built-in fabric or wood PBR preset for suitable parts. It is instructed to compare perspective, front and bottom previews against the references, check visible connections and correct obvious defects. The final revision must have all three captures before completion. These checks do not guarantee similarity or structural integrity, particularly where surfaces are hidden. The result remains editable; textures and unseen details are approximations. See [PBR materials](docs/PBR-MATERIALS.md) for requirements and limitations.
