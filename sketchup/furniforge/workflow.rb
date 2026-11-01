@@ -106,6 +106,13 @@ module YvieroM
       valid_vector(p.fetch('position_mm',[0,0,0]))
       valid_vector(p.fetch('rotation_deg',[0,0,0]),360)
       raise 'Invalid colour' unless p.fetch('color','#d8d5cc').match?(/\A#[0-9a-fA-F]{6}\z/)
+      if p.key?('material')
+        mat=p['material']
+        raise 'Invalid material specification' unless mat.is_a?(Hash) && (mat.keys-%w[preset texture_scale_mm roughness]).empty? && %w[fabric wood].include?(mat['preset'])
+        scale=mat.fetch('texture_scale_mm',200); roughness=mat.fetch('roughness',0.85)
+        raise 'Invalid material scale or roughness' unless scale.is_a?(Numeric) && scale.finite? && scale.between?(10,2000) && roughness.is_a?(Numeric) && roughness.finite? && roughness.between?(0,1)
+        raise 'PBR materials require SketchUp 2025 or later' unless Sketchup::Material.instance_methods.include?(:roughness_enabled=)
+      end
       case p['kind']
       when 'box'
         valid_vector(p['size_mm'])
@@ -137,9 +144,39 @@ module YvieroM
         raise 'Mesh produced no faces' if group.entities.grep(Sketchup::Face).empty?
       end
       color=p.fetch('color','#d8d5cc')
+      if p['material']
+        spec=p['material']; preset=spec['preset']; scale=spec.fetch('texture_scale_mm',200); rough=spec.fetch('roughness',0.85)
+        materials=Sketchup.active_model.materials
+        material=materials.add(materials.unique_name("FurniForge #{preset}"))
+        material.texture=File.join(__dir__,'materials',"#{preset}-base.png")
+        material.texture.size=[scale.mm,scale.mm]
+        material.color=Sketchup::Color.new(color)
+        material.roughness_enabled=true
+        material.roughness_factor=rough
+        material.metalness_enabled=true
+        material.metallic_factor=0.0
+        material.normal_texture=File.join(__dir__,'materials',"#{preset}-normal.png")
+        material.normal_enabled=true
+        material.normal_scale=0.5
+        color=material
+      end
       group.entities.grep(Sketchup::Face).each do |face|
         face.material=color
         face.back_material=color
+        if p['material']
+          # Consistent local-space planar UVs per dominant axis. Adjacent faces
+          # using the same plane share scale and alignment. Projection changes
+          # at corners, so seams there are expected rather than hidden.
+          normal=face.normal; axis=[normal.x.abs,normal.y.abs,normal.z.abs].each_with_index.max[1]
+          axes=axis==0 ? [1,2] : axis==1 ? [0,2] : [0,1]
+          unit=p['material'].fetch('texture_scale_mm',200).mm.to_f
+          points=face.vertices.first(3).flat_map do |vertex|
+            pt=vertex.position; xyz=pt.to_a
+            [pt,Geom::Point3d.new(xyz[axes[0]]/unit,xyz[axes[1]]/unit,0)]
+          end
+          raise 'Could not position PBR texture' unless face.position_material(color,points,true)
+          raise 'Could not position back PBR texture' unless face.position_material(color,points,false)
+        end
       end
       group.set_attribute(JOB_DICT,'part_id',p['id'])
       tr=Geom::Transformation.translation(p.fetch('position_mm',[0,0,0]).map(&:mm))
@@ -310,6 +347,7 @@ module YvieroM
     end
   end
 end
+
 
 
 
