@@ -118,7 +118,7 @@ The state file contains a connection token: provide its **path only**, and do no
 - FurniForge is a preview, not a guarantee of a photo-identical or manufacturing-ready model. Hidden surfaces, proportions and material appearance may be approximated; check the result in SketchUp.
 - Supplied information takes precedence. If overall dimensions are not provided, scale is approximate. Image analysis, modelling and review can still consume AI usage even when details are supplied.
 - Reference files are cached locally and sent to the chosen assistant when it reads them. Use **Save draft in model** and save the SketchUp file to restore saved details and locally cached reference bindings later. Unsaved edits and active AI sessions do not resume; reattach any missing images, especially on another computer.
-- Commercial activation, texture mapping, and background integrations for Claude Code, Cursor and Gemini are not implemented.
+- Commercial activation and background integrations for Claude Code, Cursor and Gemini are not implemented. PBR materials use procedural planar texture mapping, which can show seams or stretching on curved surfaces.
 
 ## Documentation
 
