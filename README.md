@@ -37,6 +37,7 @@ See an [original AI-generated sofa reference and its FurniForge model](docs/SOFA
 - Provide optional product details, dimensions, material notes and a description.
 - Start a GPT Codex session from FurniForge and review requested actions as it builds.
 - Receive named, editable geometry directly in SketchUp and refine it there.
+- Apply built-in procedural fabric and wood PBR materials during model creation in SketchUp 2025 or later. The assistant selects suitable parts; material selection is not guaranteed for every part.
 - Save a draft in the model and restore its details and locally cached references when reopening the saved SketchUp file.
 
 ## Assistant support
@@ -58,7 +59,7 @@ The selected assistant requires its own account and access. AI processing uses t
 4. For the latest development preview, install [FurniForge-PBR-development-candidate.rbz](releases/FurniForge-PBR-development-candidate.rbz) in SketchUp through **Extension Manager → Install Extension**. Complete any sign-in and permission prompts yourself.
 5. Start SketchUp and FurniForge. Follow the assistant-specific setup below, then verify that the bridge responds before starting a model.
 
-**Requirements:** FurniForge has its own MCP bridge; mhyrr's SketchUp MCP connector is not required. Windows for the tested background launcher, SketchUp with the extension installed, Node.js 20+, and the selected assistant's supported access. The extension package is an unsigned developer preview. Do not move the extracted folder after configuration without updating the launcher paths.
+**Requirements:** FurniForge has its own MCP bridge; mhyrr's SketchUp MCP connector is not required. Windows for the tested background launcher, SketchUp with the extension installed (SketchUp 2025 or later for PBR), Node.js 20+, and the selected assistant's supported access. The extension package is an unsigned developer preview. Do not move the extracted folder after configuration without updating the launcher paths.
 
 ### GPT Codex background setup
 
@@ -129,6 +130,7 @@ The state file contains a connection token: provide its **path only**, and do no
 - [Test results](TEST-RESULTS.md)
 - [Commercial readiness notes](docs/COMMERCIAL-READINESS.md)
 - [Third-party notices](THIRD-PARTY-NOTICES.md)
+- [Contributing and reporting issues](CONTRIBUTING.md)
 
 ## Author & License
 
