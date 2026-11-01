@@ -15,6 +15,7 @@ FurniForge is an early developer preview for interior designers who want to brin
 
 - [Original sofa reference example](#original-sofa-reference-example)
 - [What you can do](#what-you-can-do)
+- [How it works](#how-it-works)
 - [Assistant support](#assistant-support)
 - [Install from the repository ZIP](#install-from-the-repository-zip)
   - [GPT Codex background setup](#gpt-codex-background-setup)
@@ -39,6 +40,27 @@ See an [original AI-generated sofa reference and its FurniForge model](docs/SOFA
 - Receive named, editable geometry directly in SketchUp and refine it there.
 - Apply built-in procedural fabric and wood PBR materials during model creation in SketchUp 2025 or later. The assistant selects suitable parts; material selection is not guaranteed for every part.
 - Save a draft in the model and restore its details and locally cached references when reopening the saved SketchUp file.
+
+## How it works
+
+The diagram shows the supported GPT Codex background workflow as connected steps. It is an illustration of the process, not a node editor in FurniForge.
+
+```mermaid
+flowchart LR
+    A["1 · Reference images<br/>and optional dimensions"] --> B["2 · FurniForge panel<br/>in SketchUp"]
+    B --> C["3 · GPT Codex<br/>interprets the request"]
+    C <--> D["4 · Local MCP bridge<br/>sends modelling commands"]
+    D <--> E["5 · FurniForge extension<br/>creates editable parts"]
+    E --> F{"Suitable fabric or<br/>wood material?"}
+    F -->|"Yes, when selected"| G["Apply procedural PBR preset<br/>SketchUp 2025+"]
+    F -->|"No or not selected"| H["Use solid-colour material"]
+    G --> I["6 · Assistant inspects preview<br/>and corrects visible issues"]
+    H --> I
+    I --> J["7 · Finished editable model<br/>review and refine in SketchUp"]
+    I -. "corrections" .-> D
+```
+
+You provide the images and any known measurements in the panel. Codex interprets them and uses the local MCP bridge to create named parts in the open SketchUp model. It can select a built-in fabric or wood PBR preset for suitable parts, then inspect a preview and make corrections. The result remains editable. Material selection is not guaranteed; textures and unseen details are approximations. See [PBR materials](docs/PBR-MATERIALS.md) for requirements and limitations.
 
 ## Assistant support
 
