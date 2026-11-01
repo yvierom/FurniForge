@@ -1,6 +1,6 @@
 # FurniForge
 
-> **Developer preview:** The current [development candidate](releases/FurniForge-development-candidate.rbz) includes draft recovery and the latest tested interface. It is not a stable release; its internal version label still displays 0.4.2. The [original 0.4.2 package](releases/FurniForge-0.4.2.rbz) remains available for rollback. See [preview improvements](docs/PREVIEW-IMPROVEMENTS.md).
+> **Developer preview:** The [PBR development candidate](releases/FurniForge-PBR-development-candidate.rbz) adds procedural fabric and wood materials. It is unsigned and not a stable release; its internal version label still displays 0.4.2. Install it with the matching repository source and bridge. The [previous candidate](releases/FurniForge-development-candidate.rbz) and [original 0.4.2 package](releases/FurniForge-0.4.2.rbz) remain available for rollback. See [PBR materials](docs/PBR-MATERIALS.md) and [preview improvements](docs/PREVIEW-IMPROVEMENTS.md).
 
 **Turn furniture reference images into editable SketchUp geometry, with help from your AI assistant.**
 
@@ -55,7 +55,7 @@ The selected assistant requires its own account and access. AI processing uses t
 1. On GitHub, select **Code → Download ZIP**, then extract it to a stable local folder. 
 2. Open that folder as a project in your coding assistant. The assistant needs access to the extracted files on your computer.
 3. Ask it: **“Read the FurniForge README and help me install and connect FurniForge for my assistant. Preserve my existing settings and verify the connection to SketchUp.”**
-4. For the latest development preview, install [FurniForge-development-candidate.rbz](releases/FurniForge-development-candidate.rbz) in SketchUp through **Extension Manager → Install Extension**. Complete any sign-in and permission prompts yourself.
+4. For the latest development preview, install [FurniForge-PBR-development-candidate.rbz](releases/FurniForge-PBR-development-candidate.rbz) in SketchUp through **Extension Manager → Install Extension**. Complete any sign-in and permission prompts yourself.
 5. Start SketchUp and FurniForge. Follow the assistant-specific setup below, then verify that the bridge responds before starting a model.
 
 **Requirements:** FurniForge has its own MCP bridge; mhyrr's SketchUp MCP connector is not required. Windows for the tested background launcher, SketchUp with the extension installed, Node.js 20+, and the selected assistant's supported access. The extension package is an unsigned developer preview. Do not move the extracted folder after configuration without updating the launcher paths.
