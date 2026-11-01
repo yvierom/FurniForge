@@ -194,6 +194,12 @@ module YvieroM
         raise 'Text field is too long' if value.length > 4000
         values[key] = value unless value.empty?
       end
+      model=data['codex_model'].to_s.strip
+      effort=data['codex_effort'].to_s.strip
+      raise 'Invalid Codex model ID' unless model.empty? || model.match?(/\A[a-zA-Z0-9][a-zA-Z0-9._-]{0,127}\z/)
+      raise 'Invalid reasoning effort' unless effort.empty? || %w[none minimal low medium high xhigh max].include?(effort)
+      values['codex_model']=model unless model.empty?
+      values['codex_effort']=effort unless effort.empty?
       { 'width_mm'=>[1,20000], 'depth_mm'=>[1,20000], 'height_mm'=>[1,20000] }.each do |key,range|
         next if data[key].nil? || data[key].to_s.strip.empty?
         number = Float(data[key])

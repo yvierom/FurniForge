@@ -87,6 +87,8 @@ The selected assistant requires its own account and access. AI processing uses t
 
 From the extracted repository folder, run `npm ci --ignore-scripts`, install and sign in to Codex CLI, then run `setup-launcher.ps1` in PowerShell. If `codex` resolves to a `.cmd` wrapper, provide the native executable with `-CodexPath`. The launcher stores local executable paths in `%LOCALAPPDATA%/FurniForge/launcher.json`; it does not include account credentials. Open **Extensions → FurniForge → Open workspace**, select GPT Codex, attach images, allow the background session, and choose **Create model**. Approve or decline each requested action in the panel.
 
+In the assistant panel, optionally enter a Codex model ID and choose a reasoning effort. Leave either field at its default to use Codex configuration. FurniForge displays the model and effort returned by Codex after the session starts; model access and supported effort levels depend on the account and model. The model field accepts an ID rather than listing account entitlements. A rejected model or effort is reported as a session error. These controls are part of the source extension and require a matching rebuilt RBZ.
+
 ### Claude Code, Cursor and Gemini CLI
 
 Ask the assistant to read [Assistant setup](integrations/ASSISTANT-SETUP.md). It can help configure that assistant's MCP connection and test `furniforge_status`. This is a manual assistant workflow, not a background session initiated by the FurniForge panel. The integrations have not yet been tested end-to-end with those providers. See the [background integration brief](integrations/BACKGROUND-INTEGRATION.md) for the remaining work.

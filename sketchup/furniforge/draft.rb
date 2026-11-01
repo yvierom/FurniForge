@@ -12,7 +12,7 @@ module YvieroM
       return request unless raw.is_a?(String) && raw.bytesize <= 100_000
       data=JSON.parse(raw)
       return request unless data.is_a?(Hash) && data['version']==1 && data['values'].is_a?(Hash) && data['references'].is_a?(Array)
-      text_keys=%w[name category description material notes assistant]
+      text_keys=%w[name category description material notes assistant codex_model codex_effort]
       dimension_keys=%w[width_mm depth_mm height_mm]
       request[:values]=data['values'].select do |k,v|
         (text_keys.include?(k) && v.is_a?(String) && v.length<=4000) ||

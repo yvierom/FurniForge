@@ -40,7 +40,8 @@ module YvieroM
    folder=File.join(File.dirname(state_path),'runs',request_id)
    FileUtils.mkdir_p(folder)
    task={node:config['node'],codex:config['codex'],server:config['server'],bridge_state:state_path,
-    request_id:request_id,cwd:File.join(folder,'workspace'),status_file:File.join(folder,'status.json'),cancel_file:File.join(folder,'cancel'),approval_file:File.join(folder,'approval.json')}
+    request_id:request_id,cwd:File.join(folder,'workspace'),status_file:File.join(folder,'status.json'),cancel_file:File.join(folder,'cancel'),approval_file:File.join(folder,'approval.json'),
+    model:current_request[:values]['codex_model'],effort:current_request[:values]['codex_effort']}
    file=File.join(folder,'task.json');File.write(file,JSON.generate(task))
    File.write(task[:status_file],JSON.generate({status:'starting',message:'Starting Codex…'}))
    script=File.join(__dir__,'runner','codex-runner.mjs')

@@ -11,6 +11,8 @@ export async function runTask(taskPath,{spawnProcess=spawn}={}){
  const task=JSON.parse(await readFile(taskPath,'utf8'));
  for(const k of ['codex','node','server','bridge_state','cwd','status_file','cancel_file','approval_file'])if(typeof task[k]!=='string'||!path.isAbsolute(task[k]))throw Error('Invalid launcher path: '+k);
  if(!/^[a-zA-Z0-9_-]{8,80}$/.test(task.request_id))throw Error('Invalid request ID');
+ if(task.model!=null&&!/^[a-zA-Z0-9][a-zA-Z0-9._-]{0,127}$/.test(task.model))throw Error('Invalid model ID');
+ if(task.effort!=null&&!['none','minimal','low','medium','high','xhigh','max'].includes(task.effort))throw Error('Invalid reasoning effort');
  const out={status:'starting',message:'Starting Codex…',request_id:task.request_id,updated_at:new Date().toISOString()};
  let chain=Promise.resolve(),child,finished=false,timer,deadline,stderr='',lastMessage='',lastToolError='',modelFinished=false,approval=null,responding=false,nextId=100;
  const pending=new Map();
@@ -58,10 +60,10 @@ export async function runTask(taskPath,{spawnProcess=spawn}={}){
   (async()=>{
    await rpc('initialize',{clientInfo:{name:'furniforge',title:'FurniForge',version:'0.4.2'},capabilities:{experimentalApi:true}});send({method:'initialized',params:{}});
    const global=await list();const disabled=Object.fromEntries(global.filter(x=>x.name!=='furniforge').map(x=>[x.name,{enabled:false,command:task.node}]));
-   const t=await rpc('thread/start',{cwd:task.cwd,ephemeral:true,approvalPolicy:'on-request',approvalsReviewer:'user',sandbox:'read-only',config:{web_search:'disabled',mcp_servers:{...disabled,furniforge:{command:task.node,args:[task.server],required:true,env:{FURNIFORGE_STATE:task.bridge_state,FURNIFORGE_REQUEST_ID:task.request_id}}}}});
+   const t=await rpc('thread/start',{cwd:task.cwd,ephemeral:true,...(task.model?{model:task.model}:{}),approvalPolicy:'on-request',approvalsReviewer:'user',sandbox:'read-only',config:{...(task.effort?{model_reasoning_effort:task.effort}:{}),web_search:'disabled',mcp_servers:{...disabled,furniforge:{command:task.node,args:[task.server],required:true,env:{FURNIFORGE_STATE:task.bridge_state,FURNIFORGE_REQUEST_ID:task.request_id}}}}});
    const servers=await list(t.thread.id);const unexpected=servers.filter(x=>x.name!=='furniforge'&&Object.keys(x.tools||{}).length);const own=servers.find(x=>x.name==='furniforge');
    if(unexpected.length||!own||!own.tools?.furniforge_apply_parts)throw Error('Could not isolate the FurniForge MCP server. No modelling started.');
-   out.session_id=t.thread.id;out.status='running';out.message='Codex connected; reading the modelling request.';await save();
+   out.session_id=t.thread.id;out.model=typeof t.model==='string'?t.model:null;out.reasoning_effort=typeof t.reasoningEffort==='string'?t.reasoningEffort:null;out.status='running';out.message='Codex connected; reading the modelling request.';await save();
    await rpc('turn/start',{threadId:t.thread.id,input:[{type:'text',text:makePrompt(task),text_elements:[]}]});
   })().catch(fail);
   timer=setInterval(async()=>{if(responding||finished)return;responding=true;try{
