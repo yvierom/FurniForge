@@ -13,7 +13,7 @@ FurniForge is an early developer preview for interior designers who want to brin
 
 ## Table of Contents
 
-- [A real prototype test](#a-real-prototype-test)
+- [Original sofa reference example](#original-sofa-reference-example)
 - [What you can do](#what-you-can-do)
 - [Assistant support](#assistant-support)
 - [Install from the repository ZIP](#install-from-the-repository-zip)
@@ -27,9 +27,9 @@ FurniForge is an early developer preview for interior designers who want to brin
 - [Documentation](#documentation)
 - [Author & License](#author--license)
 
-## A real prototype test
+## Original sofa reference example
 
-See a supplied reference and an actual SketchUp model preview from the [sofa test](docs/SOFA-TEST.md). The result is an approximation, and photo similarity has not been measured.
+See an [original AI-generated sofa reference and its FurniForge model](docs/SOFA-TEST.md). Dimensions and unseen details are approximate; visual similarity has not been measured.
 
 ## What you can do
 
