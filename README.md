@@ -125,6 +125,7 @@ The state file contains a connection token: provide its **path only**, and do no
 - [Assistant-guided MCP setup](integrations/ASSISTANT-SETUP.md)
 - [Background integration development brief](integrations/BACKGROUND-INTEGRATION.md)
 - [Technical details and MCP tools](docs/TECHNICAL-DETAILS.md)
+- [Procedural PBR materials](docs/PBR-MATERIALS.md)
 - [Test results](TEST-RESULTS.md)
 - [Commercial readiness notes](docs/COMMERCIAL-READINESS.md)
 - [Third-party notices](THIRD-PARTY-NOTICES.md)
