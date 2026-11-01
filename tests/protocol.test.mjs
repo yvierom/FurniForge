@@ -11,6 +11,8 @@ test('MCP initializes, lists bounded tools, validates input and reports unavaila
  try {
   const list=await client.listTools();
   assert.equal(list.tools.length,8);
+  const views=list.tools.find(t=>t.name==='furniforge_capture_preview').inputSchema.properties.view.enum;
+  assert.ok(['perspective','front','bottom','left','right'].every(view=>views.includes(view)));
   const geometry=list.tools.find(t=>t.name==='furniforge_apply_parts').inputSchema;
   const position=geometry.properties.parts.items.properties.position_mm;
   assert.equal(position.type,'array');assert.equal(position.minItems,3);assert.equal(position.maxItems,3);

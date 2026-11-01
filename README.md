@@ -60,7 +60,7 @@ flowchart LR
     I -. "corrections" .-> D
 ```
 
-You provide the images and any known measurements in the panel. Codex interprets them and uses the local MCP bridge to create named parts in the open SketchUp model. It can select a built-in fabric or wood PBR preset for suitable parts, then inspect a preview and make corrections. The result remains editable. Material selection is not guaranteed; textures and unseen details are approximations. See [PBR materials](docs/PBR-MATERIALS.md) for requirements and limitations.
+You provide the images and any known measurements in the panel. Codex interprets them and uses the local MCP bridge to create named parts in the open SketchUp model. It can select a built-in fabric or wood PBR preset for suitable parts. It is instructed to compare perspective, front and bottom previews against the references, check visible connections and correct obvious defects. The final revision must have all three captures before completion. These checks do not guarantee similarity or structural integrity, particularly where surfaces are hidden. The result remains editable; textures and unseen details are approximations. See [PBR materials](docs/PBR-MATERIALS.md) for requirements and limitations.
 
 ## Assistant support
 
