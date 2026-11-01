@@ -1,6 +1,6 @@
 # Reference-to-model test: sofa
 
-This private developer-preview test used six supplied product reference images and an optional description. A GPT Codex background session created geometry in the active SketchUp model after requested tool actions were approved.
+This developer-preview test used six supplied product reference images and an optional description. A GPT Codex background session created geometry in the active SketchUp model after requested tool actions were approved.
 
 ![One of the six reference images used in the test](images/sofa-reference.png)
 

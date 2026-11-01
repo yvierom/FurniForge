@@ -1,6 +1,6 @@
 # Third-party components
 
-FurniForge original implementation: yviero_m, all rights reserved.
+FurniForge original implementation: copyright 2026 Yuan Viero Mahendra, MIT License; see LICENSE.txt.
 
 - @modelcontextprotocol/sdk 1.32.2 — MIT, copyright Anthropic, PBC. License: licenses/MCP-SDK-LICENSE.txt.
 - Zod — MIT. Installed package contains its license.
@@ -11,4 +11,4 @@ The protocol server uses the official MCP SDK. No source from the pre-existing S
 SketchUp is a third-party product. FurniForge is an independent extension.
 
 
-Assistant icons retained from the existing FurniForge design prototype identify OpenAI, Anthropic/Claude, Cursor and Google/Gemini. They are third-party brand marks, not original FurniForge branding. This private preview does not establish rights to those marks for a public commercial release; confirm asset provenance and applicable brand permissions before distribution.
+Assistant icons retained from the existing FurniForge design prototype identify OpenAI, Anthropic/Claude, Cursor and Google/Gemini. They are third-party brand marks, not original FurniForge branding. This notice does not establish rights to those marks; confirm asset provenance and applicable brand permissions before distribution.
