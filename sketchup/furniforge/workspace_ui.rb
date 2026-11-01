@@ -27,7 +27,7 @@ module YvieroM
       @dialog=UI::HtmlDialog.new(dialog_title:'FurniForge · yviero_m',preferences_key:'yviero_m.furniforge.v2',
         scrollable:true,resizable:true,width:1240,height:850,style:UI::HtmlDialog::STYLE_DIALOG)
       @dialog.set_file(File.join(__dir__,'ui','panel.html'))
-      @dialog.add_action_callback('ready') { |_ctx| push_panel }
+      @dialog.add_action_callback('ready') { |_ctx| begin; refresh_model_catalog; rescue; end; push_panel }
       @dialog.add_action_callback('refresh') { |_ctx| push_panel }
       @dialog.add_action_callback('workspace_action') do |_ctx,json|
         begin
@@ -36,6 +36,9 @@ module YvieroM
             raise 'Active SketchUp model changed. Refresh the workspace before continuing.'
           end
           case command['action']
+          when 'refresh_models'
+            refresh_model_catalog
+            push_panel('Refreshing the Codex model list…')
           when 'generate'
             raise 'A background session is already running.' if background_active?
             raise 'Choose GPT Codex for background generation.' unless command.dig('values','assistant')=='GPT Codex'

@@ -25,9 +25,32 @@ module YvieroM
   end
   def self.launcher_info
    config=launcher_config
-   {available:true,provider:'GPT Codex',run:runner_state}
+   {available:true,provider:'GPT Codex',run:runner_state,models:model_catalog_state}
   rescue => e
    {available:false,provider:'GPT Codex',message:e.message,run:runner_state}
+  end
+  def self.refresh_model_catalog
+   config=launcher_config
+   folder=File.join(File.dirname(state_path),'model-catalog')
+   FileUtils.mkdir_p(folder)
+   token=SecureRandom.uuid
+   output=File.join(folder,token+'.json')
+   task=File.join(folder,token+'-task.json')
+   File.write(task,JSON.generate({codex:config['codex'],output:output}))
+   script=File.join(__dir__,'runner','model-catalog.mjs')
+   paths=[config['node'],script,task]
+   raise 'Invalid launcher path' if paths.any?{|p|p.match?(/["\r\n]/)}
+   @model_catalog={output:output,started_at:Time.now}
+   WIN32OLE.new('WScript.Shell').Run(paths.map{|p|'"'+p.tr('/','\\')+'"'}.join(' '),0,false)
+  end
+  def self.model_catalog_state
+   return {status:'idle',models:[]} unless @model_catalog
+   path=@model_catalog[:output]
+   return JSON.parse(File.read(path,encoding:'utf-8')) if File.file?(path) && File.size(path)<200_000
+   return {status:'error',message:'Model list timed out.',models:[]} if Time.now-@model_catalog[:started_at]>20
+   {status:'loading',models:[]}
+  rescue JSON::ParserError, IOError
+   {status:'loading',models:[]}
   end
   def self.background_active?
    %w[starting running waiting_approval].include?((runner_state['status'] || runner_state[:status]).to_s)
