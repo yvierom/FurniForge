@@ -6,7 +6,21 @@ module YvieroM
    path=File.join(File.dirname(state_path),'launcher.json')
    raise 'Background Codex is not configured. See Setup guide.' unless File.file?(path)
    config=JSON.parse(File.read(path,encoding:'bom|utf-8'))
-   %w[node codex server].each { |key| raise "Launcher #{key} path is unavailable" unless config[key].is_a?(String) && File.file?(config[key]) }
+   # Recover only the configured versioned Codex Desktop executable.
+   configured=config['codex']
+   bin_dir=File.join(ENV['LOCALAPPDATA'].to_s,'OpenAI','Codex','bin')
+   if configured.is_a?(String) && !File.file?(configured) && !ENV['LOCALAPPDATA'].to_s.empty?
+    normalized=File.expand_path(configured).tr('\\','/').downcase
+    root=File.expand_path(bin_dir).tr('\\','/').downcase
+    if normalized.match?(%r{\A#{Regexp.escape(root)}/[^/]+/codex\.exe\z})
+     candidates=Dir.glob(File.join(bin_dir,'*','codex.exe')).select { |candidate| File.file?(candidate) }
+     config['codex']=candidates.first if candidates.length==1
+    end
+   end
+   %w[node codex server].each do |key|
+    next if config[key].is_a?(String) && File.file?(config[key])
+    raise "Launcher #{key} path is unavailable. Run setup-launcher.ps1 to reconfigure it."
+   end
    config
   end
   def self.runner_state
