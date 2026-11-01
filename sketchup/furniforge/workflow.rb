@@ -163,6 +163,20 @@ module YvieroM
       group.entities.grep(Sketchup::Face).each do |face|
         face.material=color
         face.back_material=color
+        if p['material']
+          # Consistent local-space planar UVs per dominant axis. Adjacent faces
+          # using the same plane share scale and alignment. Projection changes
+          # at corners, so seams there are expected rather than hidden.
+          normal=face.normal; axis=[normal.x.abs,normal.y.abs,normal.z.abs].each_with_index.max[1]
+          axes=axis==0 ? [1,2] : axis==1 ? [0,2] : [0,1]
+          unit=p['material'].fetch('texture_scale_mm',200).mm.to_f
+          points=face.vertices.first(3).flat_map do |vertex|
+            pt=vertex.position; xyz=pt.to_a
+            [pt,Geom::Point3d.new(xyz[axes[0]]/unit,xyz[axes[1]]/unit,0)]
+          end
+          raise 'Could not position PBR texture' unless face.position_material(color,points,true)
+          raise 'Could not position back PBR texture' unless face.position_material(color,points,false)
+        end
       end
       group.set_attribute(JOB_DICT,'part_id',p['id'])
       tr=Geom::Transformation.translation(p.fetch('position_mm',[0,0,0]).map(&:mm))
