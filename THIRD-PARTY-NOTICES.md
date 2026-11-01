@@ -11,4 +11,15 @@ The protocol server uses the official MCP SDK. No source from the pre-existing S
 SketchUp is a third-party product. FurniForge is an independent extension.
 
 
-Assistant icons retained from the existing FurniForge design prototype identify OpenAI, Anthropic/Claude, Cursor and Google/Gemini. They are third-party brand marks, not original FurniForge branding. This notice does not establish rights to those marks; confirm asset provenance and applicable brand permissions before distribution.
+## Assistant brand assets — review pending
+
+The assistant selector contains four third-party brand icons retained from the design prototype. The repository history does not identify their source, an asset license, or a permission grant. Their appearance in this repository does not establish that FurniForge has permission to distribute or use them. Product names identify compatibility and do not imply endorsement or affiliation.
+
+| Asset | Provider guidance | Review status |
+| --- | --- | --- |
+| `sketchup/furniforge/ui/openai.svg` | [OpenAI design guidelines](https://openai.com/brand/) | Source and permission for this specific asset and use are not documented. |
+| `sketchup/furniforge/ui/claude.svg` | [Anthropic trademark guidelines](https://www.anthropic.com/legal/trademark-guidelines) | Source and prior permission or approval are not documented. |
+| `sketchup/furniforge/ui/cursor.svg` | [Cursor brand guidelines](https://cursor.com/brand) | Source and terms applicable to this specific asset and use are not documented. |
+| `sketchup/furniforge/ui/googlegemini.svg` | [Google brand guidance](https://about.google/brand-resource-center/guidance/) and [brand terms](https://about.google/intl/en/brand-resource-center/brand-terms/) | Source and permission for this specific asset and use are not documented. |
+
+The same icons may also be included in distributed RBZ files and historical Git revisions. Review the relevant provider terms and provenance before distributing those assets, or replace them with independent artwork and rebuild the packages. This inventory is not a legal determination.
