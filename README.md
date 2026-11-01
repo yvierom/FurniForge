@@ -29,7 +29,7 @@ FurniForge is an early developer preview for interior designers who want to brin
 
 ## Original sofa reference example
 
-See the [original AI-generated sofa reference](docs/SOFA-TEST.md) for an example input. A FurniForge model for this new reference has not yet been generated or verified.
+See an [original AI-generated sofa reference and its FurniForge model](docs/SOFA-TEST.md). Dimensions and unseen details are approximate; visual similarity has not been measured.
 
 ## What you can do
 
